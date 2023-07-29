@@ -98,12 +98,15 @@
 }
 
 .center::before,
-.center::after {
+.center {
   content: '';
   left: 50%;
   position: absolute;
   filter: blur(45px);
   transform: translateZ(0);
+  &::after {
+    color: blue;
+  }
 }
 
 .logo {
