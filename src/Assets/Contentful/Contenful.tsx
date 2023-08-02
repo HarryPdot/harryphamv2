@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export const Contentful = ({ data, aboutData }) => {
-  const [content, setContent] = useState([]);
-  const [about, setAbout] = useState([]);
+export const Contentful = ({ data, aboutData }: any) => {
+  const [content, setContent] = useState<any>([]);
+  const [about, setAbout] = useState<any>([]);
 
   useEffect(() => {
     setContent(data);
