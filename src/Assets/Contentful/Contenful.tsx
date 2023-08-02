@@ -11,7 +11,7 @@ export const Contentful = ({ data, aboutData }: any) => {
   }, []);
   return (
     <div>
-      {content.map((item, i) => {
+      {content.map((item: any, i: number) => {
         return <div key={i}>{item.name}</div>;
       })}
     </div>
