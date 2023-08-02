@@ -1,63 +1,49 @@
-import { createClient } from 'contentful';
+import clsx from 'clsx';
 
-import { Contentful } from '@/Assets/Contentful/Contenful';
-
-const client = createClient({
-  space: 'hnyp3aiv2g1d',
-  accessToken: 'Juy1tfw4ydnGMVy2gsBgX5sTcl17BtJlTaglA_sH-QY',
-  host: 'cdn.contentful.com',
-});
-
-const getAboutContent = async () => {
-  try {
-    const entries: any = await client.getEntries({
-      content_type: 'portfolio',
-      select: 'fields',
-    });
-    return entries as any;
-  } catch (error) {
-    let errorMessage = 'Failed to do something';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    console.error(errorMessage);
-  }
-  return entries;
-};
-
-const getProjectContent = async () => {
-  try {
-    const entries: any = await client.getEntries({
-      content_type: 'projectSection',
-      select: 'fields',
-    });
-    return entries.items as any;
-  } catch (error) {
-    let errorMessage = 'Failed to do something exceptional';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    console.log(errorMessage);
-  }
-  return entries;
-};
+import { Contentful } from '../Assets/Contentful/Contenful';
+import styles from './page.module.css';
 
 async function getData(url) {
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
-
   return res.json();
 }
 
 export default async function Home() {
-  const about = await getAboutContent();
-  const project = await getProjectContent();
+  const data = await getData(
+    'https://cdn.contentful.com/spaces/hnyp3aiv2g1d/environments/master/entries?access_token=Juy1tfw4ydnGMVy2gsBgX5sTcl17BtJlTaglA_sH-QY&select=fields&content_type=projectSection',
+  );
+  // const newItems = data.items.map((item, i) => ({
+  //   ...item,
+  //   fields: {
+  //     ...item.fields,
+  //     image: {
+  //       ...item.fields.image,
+  //       ...data.includes.Asset[i].fields.file,
+  //     },
+  //   },
+  // }));
+
+  const newItems = data.items.map((item) => {
+    for (let i = 0; i < data.includes.Asset.length; i++) {
+      if (item.fields.image.sys.id === data.includes.Asset[i].sys.id) {
+        return {
+          name: item.fields.name,
+          description: item.fields.description,
+          githubURL: item.fields.githubUrl,
+          projectURL: item.fields.projectUrl,
+          skills: item.fields.skills,
+          image: `https:${data.includes.Asset[i].fields.file.url}`,
+        };
+      }
+    }
+  });
 
   return (
-    <>
-      <Contentful about={about}></Contentful>
-    </>
+    <main className={clsx(styles.main, styles.code)}>
+      <Contentful data={newItems} />
+    </main>
   );
 }

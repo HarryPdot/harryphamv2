@@ -1,16 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export const Contentful = ({ about }) => {
+export const Contentful = ({ data }) => {
   const [content, setContent] = useState([]);
-
-  useEffect(() => {
-    setContent(`https:${about.items[0].fields.portrait.fields.file.url}`);
-    console.log(content);
-  }, []);
+  console.log(data);
   return (
     <div>
-      <div>{about.items[0].fields.about}</div>
+      <div></div>
       <img src={content} alt="" />
     </div>
   );
