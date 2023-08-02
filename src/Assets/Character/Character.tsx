@@ -11,7 +11,7 @@ export const Character = () => {
       return res.blob();
     });
 
-  const { data, error, isLoading } = useSWR(url, fetcher);
+  const { data, error, isLoading } = useSWR<any>(url, fetcher);
   const { cache } = useSWRConfig();
 
   if (error) {
