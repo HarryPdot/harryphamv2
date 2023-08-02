@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { MainPage } from '@/Components/MainPage/MainPage';
 
 import { Contentful } from '../Assets/Contentful/Contenful';
 import styles from './page.module.css';
@@ -42,8 +42,8 @@ export default async function Home() {
   });
 
   return (
-    <main className={clsx(styles.main, styles.code)}>
-      <Contentful data={newItems} />
+    <main>
+      <MainPage data={newItems}></MainPage>
     </main>
   );
 }
