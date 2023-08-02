@@ -1,4 +1,5 @@
 'use client';
+import { Blob } from 'buffer';
 import { useEffect, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 
@@ -10,14 +11,13 @@ export const Character = () => {
       return res.blob();
     });
 
-  const { data: any, error, isLoading } = useSWR(url, fetcher);
+  const { data, error, isLoading } = useSWR(url, fetcher);
   const { cache } = useSWRConfig();
 
   if (error) {
     return <div>Failed to fetch users.</div>;
   }
   if (isLoading) return <h2>Loading...</h2>;
-  URL.createObjectURL(data);
 
   return (
     <picture>
