@@ -1,13 +1,19 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export const Contentful = ({ data }) => {
+export const Contentful = ({ data, aboutData }) => {
   const [content, setContent] = useState([]);
-  console.log(data);
+  const [about, setAbout] = useState([]);
+
+  useEffect(() => {
+    setContent(data);
+    setAbout(aboutData);
+  }, []);
   return (
     <div>
-      <div></div>
-      <img src={content} alt="" />
+      {content.map((item, i) => {
+        return <div key={i}>{item.name}</div>;
+      })}
     </div>
   );
 };
