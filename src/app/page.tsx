@@ -1,8 +1,5 @@
 import { MainPage } from '@/Components/MainPage/MainPage';
 
-import { Contentful } from '../Assets/Contentful/Contenful';
-import styles from './page.module.css';
-
 async function getData(url: string) {
   const res = await fetch(url);
   if (!res.ok) {
