@@ -1,11 +1,6 @@
-import { Character, Contentful } from '../../Assets/index';
+import { Character, Contentful, stances } from '../../Assets/index';
 const MainPage = ({ data, aboutData }: any) => {
-  return (
-    <div>
-      <Contentful data={data} aboutData={aboutData}></Contentful>
-      <Character></Character>
-    </div>
-  );
+  return <div></div>;
 };
 
 export { MainPage };
