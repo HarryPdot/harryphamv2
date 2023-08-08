@@ -26,7 +26,7 @@ const OShrimp = ({ pos, setPos }: any) => {
 
   useEffect(() => {
     // console.log(myRef.current.offsetLeft);
-    const position: unknown = document
+    const position: any = document
       .getElementById('shrimp')
       ?.getBoundingClientRect();
 
