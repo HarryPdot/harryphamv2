@@ -5,7 +5,7 @@ import { Character, stances } from '@/Assets/index';
 import styles from './OShrimp.module.css';
 
 // get distance between shrimp and the cursor
-const getDistance = (xy) => {
+const getDistance = (xy: any) => {
   return Math.hypot(xy.shrimpX - xy.clientX, xy.shrimpY - xy.clientY);
 };
 
@@ -13,12 +13,12 @@ const getDistance = (xy) => {
 const speed = 100;
 
 // finding position of element
-const position: any = (id) => {
+const position: any = (id: string) => {
   return document.getElementById(id)?.getBoundingClientRect();
 };
 
 // document to updating css vars
-const updateVar = (vars, value) => {
+const updateVar = (vars, value): any => {
   return document.documentElement.style.setProperty(vars, value);
 };
 
@@ -27,7 +27,7 @@ const OShrimp = ({ pos, setPos }: any) => {
   const [frameCount, setFrameCount] = useState<number>(0);
 
   // function to updating css vars
-  const frame = (distance) => {
+  const frame = (distance: number) => {
     setFrameCount((prev) => prev + 1);
     if (distance <= 43) {
       return;
@@ -39,7 +39,7 @@ const OShrimp = ({ pos, setPos }: any) => {
     updateVar('--velocity', `${distance / speed}s`);
   };
 
-  const setSprite = (distance) => {
+  const setSprite = (distance: number) => {
     if (distance <= 43) {
       setCurrentStance(stances().stand);
     } else if (distance > 43) {
