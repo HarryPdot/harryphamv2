@@ -1,5 +1,6 @@
 import { MainPage } from '@/Components/MainPage/MainPage';
 
+import styles from './page.module.css';
 async function getData(url: string) {
   const res = await fetch(url);
   if (!res.ok) {
@@ -39,7 +40,7 @@ export default async function Home() {
   });
 
   return (
-    <main>
+    <main className={styles.main}>
       <MainPage data={newContent} aboutData={newAbout}></MainPage>
     </main>
   );

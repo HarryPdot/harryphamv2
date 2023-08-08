@@ -1,0 +1,10 @@
+.shrimp {
+  height: 60px;
+  position: fixed;
+  pointer-events: none;
+  image-rendering: pixelated;
+  left: calc(var(--shrimpX) - 30px);
+  top: calc(var(--shrimpY) - 30px);
+  transform: translate(-50%, -50%);
+  transition: linear var(--velocity);
+}
