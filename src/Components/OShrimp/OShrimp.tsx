@@ -34,7 +34,7 @@ const OShrimp = ({ pos, setPos }: any) => {
   const [frameCount, setFrameCount] = useState<number>(0);
 
   // function to updating css vars
-  const frame = (distance: number) => {
+  const frame = (distance: any) => {
     setFrameCount((prev) => prev + 1);
     const { top, left, width, height } = position('shrimp');
     const a = {
