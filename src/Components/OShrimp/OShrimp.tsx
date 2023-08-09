@@ -6,7 +6,12 @@ import styles from './OShrimp.module.css';
 
 // get distance between shrimp and the cursor
 const getDistance = (xy: any) => {
-  return Math.hypot(xy.shrimpX - xy.clientX, xy.shrimpY - xy.clientY);
+  const { top, left, width, height } = position('shrimp');
+  const a = {
+    x: left + width / 2,
+    y: top + height / 2,
+  };
+  return Math.hypot(a.x - xy.clientX, a.y - xy.clientY);
 };
 
 // shrimps velocity towards the cursor
@@ -28,10 +33,18 @@ const OShrimp = ({ pos, setPos }: any) => {
 
   // function to updating css vars
   const frame = (distance: number) => {
+    const { top, left, width, height } = position('shrimp');
+    const a = {
+      x: left + width / 2,
+      y: top + height / 2,
+    };
     setFrameCount((prev) => prev + 1);
-    if (distance <= 43) {
+    if (distance <= 70) {
+      setSprite(stances().stand);
+      updateVar('--shrimpX', a.x + 'px');
+      updateVar('--shrimpY', a.y + 'px');
       return;
-    } else {
+    } else if (distance > 70) {
       updateVar('--shrimpX', pos.clientX + 'px');
       updateVar('--shrimpY', pos.clientY + 'px');
     }
@@ -39,22 +52,21 @@ const OShrimp = ({ pos, setPos }: any) => {
     updateVar('--velocity', `${distance / speed}s`);
   };
 
-  const setSprite = (distance: number) => {
-    if (distance <= 43) {
-      setCurrentStance(stances().stand);
-    } else if (distance > 43) {
-      setCurrentStance(stances().walk);
-    }
+  const setSprite = (stance: string) => {
+    setCurrentStance(stance);
+  };
+
+  const setMove = () => {
+    setPos({
+      ...pos,
+      shrimpX: position('shrimp')?.left,
+      shrimpY: position('shrimp')?.top,
+    });
   };
 
   // update positions at a constant speed
   useEffect(() => {
-    setPos({
-      ...pos,
-      shrimpX: position('shrimp')?.left + 23.44,
-      shrimpY: position('shrimp')?.top + 30,
-    });
-    setSprite(getDistance(pos));
+    setMove();
     const interval = setInterval(() => frame(getDistance(pos)), 50);
     return () => clearInterval(interval);
   }, [frameCount]);
