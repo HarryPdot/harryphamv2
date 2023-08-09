@@ -34,7 +34,18 @@ const updateVar = (vars, value): any => {
 const OShrimp = ({ pos, setPos }: any) => {
   const [currentStance, setCurrentStance] = useState<string>('walk1');
   const [frameCount, setFrameCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(0);
 
+  const resetIdle = () => {
+    setCount(0);
+  };
+
+  const idle = (xy: any) => {
+    setCount((prev) => prev + 1);
+    if (count >= 50) {
+      setCurrentStance(stances().sit);
+    }
+  };
   // function to updating css vars
   const frame = (distance: any) => {
     setFrameCount((prev) => prev + 1);
@@ -46,12 +57,14 @@ const OShrimp = ({ pos, setPos }: any) => {
 
     if (distance <= 70) {
       setSprite(stances().stand);
+      idle(a);
       updateVar('--shrimpX', a.x + 'px');
       updateVar('--shrimpY', a.y + 'px');
       return;
     } else if (distance > 70) {
       setSprite(stances().walk);
       setDirection();
+      resetIdle();
       updateVar('--shrimpX', pos.clientX + 'px');
       updateVar('--shrimpY', pos.clientY + 'px');
     }
@@ -82,7 +95,7 @@ const OShrimp = ({ pos, setPos }: any) => {
   // update positions at a constant speed
   useEffect(() => {
     setMove();
-    const interval = setInterval(() => frame(getDistance(pos)), 50);
+    const interval = setInterval(() => frame(getDistance(pos)), 100);
     return () => clearInterval(interval);
   }, [frameCount]);
 
