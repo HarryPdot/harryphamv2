@@ -49,7 +49,7 @@ const OShrimp = ({ pos, setPos }: any) => {
       return;
     } else if (distance > 70) {
       setSprite(stances().walk);
-      setDirection(pos.clientX);
+      setDirection();
       updateVar('--shrimpX', pos.clientX + 'px');
       updateVar('--shrimpY', pos.clientY + 'px');
     }
