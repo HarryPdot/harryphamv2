@@ -21,11 +21,13 @@ const speed = 100;
 
 // finding position of element
 const position: any = (id: string) => {
+  if (typeof document === 'undefined') return;
   return document.getElementById(id)?.getBoundingClientRect();
 };
 
 // document to updating css vars
 const updateVar = (vars, value): any => {
+  if (typeof document === 'undefined') return;
   return document.documentElement.style.setProperty(vars, value);
 };
 
