@@ -6,12 +6,14 @@ import styles from './OShrimp.module.css';
 
 // get distance between shrimp and the cursor
 const getDistance = (xy: any) => {
-  const { top, left, width, height } = position('shrimp');
-  const a = {
-    x: left + width / 2,
-    y: top + height / 2,
-  };
-  return Math.hypot(a.x - xy.clientX, a.y - xy.clientY);
+  if (position('shrimp')) {
+    const { top, left, width, height } = position('shrimp');
+    const a = {
+      x: left + width / 2,
+      y: top + height / 2,
+    };
+    return Math.hypot(a.x - xy.clientX, a.y - xy.clientY);
+  }
 };
 
 // shrimps velocity towards the cursor
@@ -33,18 +35,21 @@ const OShrimp = ({ pos, setPos }: any) => {
 
   // function to updating css vars
   const frame = (distance: number) => {
+    setFrameCount((prev) => prev + 1);
     const { top, left, width, height } = position('shrimp');
     const a = {
       x: left + width / 2,
       y: top + height / 2,
     };
-    setFrameCount((prev) => prev + 1);
+
     if (distance <= 70) {
       setSprite(stances().stand);
       updateVar('--shrimpX', a.x + 'px');
       updateVar('--shrimpY', a.y + 'px');
       return;
     } else if (distance > 70) {
+      setSprite(stances().walk);
+      setDirection(pos.clientX);
       updateVar('--shrimpX', pos.clientX + 'px');
       updateVar('--shrimpY', pos.clientY + 'px');
     }
@@ -54,6 +59,14 @@ const OShrimp = ({ pos, setPos }: any) => {
 
   const setSprite = (stance: string) => {
     setCurrentStance(stance);
+  };
+
+  const setDirection = () => {
+    if (pos.clientX >= pos.shrimpX) {
+      updateVar('--transform', 'translate(-50%, -50%) scaleX(-1)');
+    } else {
+      updateVar('--transform', 'translate(-50%, -50%) scaleX(1)');
+    }
   };
 
   const setMove = () => {
