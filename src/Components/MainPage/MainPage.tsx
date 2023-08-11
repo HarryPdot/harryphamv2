@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+import { Loading } from '@/Service/index';
+
 import { OShrimp } from '../index';
 import styles from './MainPage.module.css';
-
 type cursorPosition = {
   clientX: number;
   clientY: number;
@@ -24,6 +25,7 @@ const MainPage = ({ data, aboutData }: any) => {
 
   return (
     <div className={styles.main} onMouseMove={handleMouse}>
+      <Loading />
       <OShrimp pos={pos} setPos={setPos}></OShrimp>
     </div>
   );

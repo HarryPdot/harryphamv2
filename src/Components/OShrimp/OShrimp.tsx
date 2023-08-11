@@ -42,13 +42,14 @@ const OShrimp = ({ pos, setPos }: any) => {
 
   const idle = (xy: any) => {
     setCount((prev) => prev + 1);
-    if (count >= 50) {
+    if (count >= 30) {
       setCurrentStance(stances().sit);
     }
   };
   // function to updating css vars
   const frame = (distance: any) => {
     setFrameCount((prev) => prev + 1);
+    if (!position('shrimp')) return;
     const { top, left, width, height } = position('shrimp');
     const a = {
       x: left + width / 2,
@@ -116,7 +117,6 @@ const OShrimp = ({ pos, setPos }: any) => {
   return (
     <div
       style={{
-        position: 'fixed',
         top: 0,
         bottom: 0,
         left: 0,
